@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        maven { url "https://jars.interlis.ch" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("ch.interlis:ilivalidator:1.13.2")
+    }
+}
+
+apply from: "$rootDir/gradle/versioning.gradle"
+
+tasks.register("benchmark_large_amount_of_area_geometries") {
+    doLast {
+        //def os = new ByteArrayOutputStream()
+        javaexec {
+            classpath = buildscript.configurations.classpath
+            main = 'org.interlis2.validator.Main'
+            //args  "--check-repo-ilis", "http://localhost"
+            args "--modeldir", "models/", "data/ch.so.afu.abbaustellen.xtf"
+            jvmArgs "-Xms2048m", "-Xmx2048m", "-XX:+UseParallelGC"
+            //errorOutput = os
+            //standardOutput = os
+        }
+        //def buildString = os.toString()
+    }
+}
