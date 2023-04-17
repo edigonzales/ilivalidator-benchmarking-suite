@@ -8,7 +8,13 @@ buildscript {
     }
 }
 
-apply from: "$rootDir/gradle/versioning.gradle"
+// Pro Version ein build-1.13.2.gradle File. Plus ein build-latests.gradle.
+// Die eigentilchen Tasks auslagern in ein separates benchmarks.gradle
+// Shell-Skript, welches die builds ausführt
+// Eventuell noch https://github.com/asarkar/build-time-tracker verwenden, wenn das besser geeignet ist als --profile. Bei dem werden ich Mühe haben, weil alles im gleichen Ordner landet. Ma guckn.
+// Man könnte glaub auch noch die jvmArgs parametrisieren: build-1.13.2-G1.gradle 
+// Java Toolchain geht nicht, da nur die Java related tasks mit dieser gewählten JVM ausgeführt werden.
+// Man kann aber den Pfad zur JDK im gradle.properties hinterlegen oder beim Aufruf angeben.
 
 tasks.register("benchmark_large_amount_of_area_geometries") {
     doLast {
